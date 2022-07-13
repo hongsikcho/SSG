@@ -12,6 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class AppTest {
 
     @Test
+    public void 종료() throws IOException {
+        Scanner sc = TestUtil.genScanner("종료");
+        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
+
+        new App(sc).run();
+
+        String rs = output.toString();
+        TestUtil.clearSetOutToByteArray(output);
+
+        assertTrue(rs.contains("=== 명언 SSG ==="));
+        assertTrue(rs.contains("명령) "));
+    }
+    @Test
     public void 테스트(){
         assertTrue(1 == 1);
         assertEquals(1,1);

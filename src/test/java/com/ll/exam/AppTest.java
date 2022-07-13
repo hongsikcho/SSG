@@ -11,6 +11,28 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppTest {
 
+
+    @Test
+    public void 등록을_하면_명언과_작가를_물어본다() throws IOException {
+        Scanner sc = TestUtil.genScanner("""
+                등록
+                나의 죽음을 적에게 알리지 마라
+                이순신
+                종료
+                """);
+        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
+
+        new App(sc).run();
+
+        String rs = output.toString();
+        TestUtil.clearSetOutToByteArray(output);
+
+        System.out.println(rs); // 궁금하면 까보기
+
+        assertTrue(rs.contains("명언) "));
+        assertTrue(rs.contains("작가) "));
+        assertTrue(rs.contains("명언이 성공적으로 등록되었습니다."));
+    }
     @Test
     public void 종료() throws IOException {
         Scanner sc = TestUtil.genScanner("종료");

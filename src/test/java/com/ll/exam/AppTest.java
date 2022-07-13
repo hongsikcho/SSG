@@ -14,20 +14,12 @@ public class AppTest {
 
     @Test
     public void 등록을_하면_명언과_작가를_물어본다() throws IOException {
-        Scanner sc = TestUtil.genScanner("""
-                등록
+        String rs = new AppTestRunner().run("""
+                 등록
                 나의 죽음을 적에게 알리지 마라
                 이순신
                 종료
                 """);
-        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
-
-        new App(sc).run();
-
-        String rs = output.toString();
-        TestUtil.clearSetOutToByteArray(output);
-
-        System.out.println(rs); // 궁금하면 까보기
 
         assertTrue(rs.contains("명언) "));
         assertTrue(rs.contains("작가) "));
@@ -35,13 +27,7 @@ public class AppTest {
     }
     @Test
     public void 종료() throws IOException {
-        Scanner sc = TestUtil.genScanner("종료");
-        ByteArrayOutputStream output = TestUtil.setOutToByteArray();
-
-        new App(sc).run();
-
-        String rs = output.toString();
-        TestUtil.clearSetOutToByteArray(output);
+        String rs = new AppTestRunner().run("종료");
 
         assertTrue(rs.contains("=== 명언 SSG ==="));
         assertTrue(rs.contains("명령) "));

@@ -22,8 +22,10 @@ public class App{
         while(true){
             System.out.print("명령) ");
             String cmd = sc.nextLine().trim();
-            switch(cmd){
 
+            rq rq = new rq(cmd);
+
+            switch(rq.getPath()){
                 case"종료":
                     break outer;
 
@@ -44,6 +46,32 @@ public class App{
                         System.out.println(wises.get(i));
                     }
                     break;
+
+                case"삭제":
+                    int paramId = rq.getIntParam("id" , 0);
+
+                    if (paramId == 0){
+                        System.out.println("번호를 입력해주세요.");
+                        continue ;
+                    }
+
+
+                    WiseSaying wise_ = null;
+
+                    for(WiseSaying wi : wises){
+                        if(paramId == wi.id){
+                            wise_ = wi;
+                        }
+                    }
+                    if(wise_ == null){
+                        System.out.println(paramId+"번 글은 존재하지 않습니다.");
+                        continue;
+                    }
+                    wises.remove(wise_);
+
+                    System.out.println(paramId+"번 명언이 삭제되었습니다.");
+                    break;
+
             }
         }
 

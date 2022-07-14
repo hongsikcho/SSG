@@ -16,7 +16,7 @@ public class WiseSaying {
         return
                 "id=" + id +
                 ", content='" + content + '\'' +
-                ", author='" + author + '\'' +
+                ", author='" + author + '\''
                 ;
     }
 }

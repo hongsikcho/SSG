@@ -5,8 +5,8 @@ public class rq{
     String url;
     String query;
 
-    rq(){
-        String[] sBits = url.split("\\?" , 2);
+    rq(String cmd){
+        String[] sBits = cmd.split("\\?" , 2);
         this.path = sBits[0];
 
         if (sBits.length == 2){
@@ -16,7 +16,7 @@ public class rq{
 
 
     public String getPath(){
-        return query;
+        return path;
     }
 
     public int getIntParam(String paramName , int defaultvalue){
@@ -27,11 +27,11 @@ public class rq{
         String[] bits = query.split("&");
 
         for(String bit : bits){
-            String[] nameValue = bit.split("=");
+            String[] nameValue = bit.split("=",2);
             String name = nameValue[0];
             String value = nameValue[1];
 
-            if(name == paramName){
+            if(name.equals(paramName)){
                 return Integer.parseInt(value);
             }
         }

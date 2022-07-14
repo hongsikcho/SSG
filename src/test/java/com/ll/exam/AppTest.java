@@ -19,7 +19,9 @@ public class AppTest {
                 등록
                 안녕하세요
                 홍식
-                삭제?id=1
+                수정?id=1
+                안녕
+                세민
                 목록
                 종료
                 """);
@@ -27,7 +29,9 @@ public class AppTest {
         assertTrue(rs.contains("명언) "));
         assertTrue(rs.contains("작가) "));
         assertTrue(rs.contains("======== 명언 목록 ========"));
-        assertFalse(rs.contains("id=1"));
+        assertTrue(rs.contains("기존 명언) "));
+        assertTrue(rs.contains("기존 작가) "));
+        assertTrue(rs.contains("성공적으로 변경되었습니다."));
     }
     
     @Test

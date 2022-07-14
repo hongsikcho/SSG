@@ -1,81 +1,129 @@
 package com.ll.exam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
-public class App{
+public class App {
     // 스캐너를 얻는다.
     // 평범한 스캐너가 아닌, 문자열을 입력으로 삼는 스캐너가 생성된다.
-        private Scanner sc;
+    private Scanner sc;
 
-        App(Scanner sc){
-            this.sc = sc;
-        }
+    App(Scanner sc) {
+        this.sc = sc;
+    }
 
-    public void run(){
+    List<WiseSaying> wises = new ArrayList<>();
+    int num = 1;
+
+    public void run() {
+
         System.out.println("=== 명언 SSG ===");
-        int num = 1;
 
-        List<WiseSaying> wises = new ArrayList<>();
+
         outer:
-        while(true){
+        while (true) {
             System.out.print("명령) ");
             String cmd = sc.nextLine().trim();
 
             rq rq = new rq(cmd);
 
-            switch(rq.getPath()){
-                case"종료":
+            switch (rq.getPath()) {
+                case "종료":
                     break outer;
 
-                case"등록":
-                    System.out.println("명언) ");
-                    String content = sc.nextLine().trim();
-                    System.out.println("작가) ");
-                    String author = sc.nextLine().trim();
-                    System.out.println(num+"번 명언이 성공적으로 등록되었습니다.");
-                    WiseSaying w = new WiseSaying(num , content, author);
-                    wises.add(w);
-                    num ++;
+                case "등록":
+                    add(rq);
                     break;
 
-                case"목록":
-                    System.out.println("======== 명언 목록 ========");
-                    for(int i = wises.size() - 1 ; i >= 0 ; i --){
-                        System.out.println(wises.get(i));
-                    }
+                case "목록":
+                    list(rq);
                     break;
 
-                case"삭제":
-                    int paramId = rq.getIntParam("id" , 0);
-
-                    if (paramId == 0){
-                        System.out.println("번호를 입력해주세요.");
-                        continue ;
-                    }
-
-
-                    WiseSaying wise_ = null;
-
-                    for(WiseSaying wi : wises){
-                        if(paramId == wi.id){
-                            wise_ = wi;
-                        }
-                    }
-                    if(wise_ == null){
-                        System.out.println(paramId+"번 글은 존재하지 않습니다.");
-                        continue;
-                    }
-                    wises.remove(wise_);
-
-                    System.out.println(paramId+"번 명언이 삭제되었습니다.");
+                case "삭제":
+                    remove(rq);
                     break;
+
+                case "수정":
+                    modify(rq);
+
 
             }
         }
 
 
+    }
 
+    public void add(rq rq) {
+        System.out.println("명언) ");
+        String content = sc.nextLine().trim();
+        System.out.println("작가) ");
+        String author = sc.nextLine().trim();
+        System.out.println(num + "번 명언이 성공적으로 등록되었습니다.");
+        WiseSaying w = new WiseSaying(num, content, author);
+        wises.add(w);
+        num++;
+    }
+
+    public void list(rq rq) {
+        System.out.println("======== 명언 목록 ========");
+        for (int i = wises.size() - 1; i >= 0; i--) {
+            System.out.println(wises.get(i));
+        }
+    }
+
+    public void remove(rq rq) {
+        int paramId = rq.getIntParam("id", 0);
+
+        if (paramId == 0) {
+            System.out.println("번호를 입력해주세요.");
+            return;
+        }
+
+
+        WiseSaying wise_ = null;
+
+        wise_ = findById(paramId);
+
+        if (wise_ == null) {
+            System.out.println(paramId + "번 글은 존재하지 않습니다.");
+            return;
+        }
+        wises.remove(wise_);
+
+        System.out.println(paramId + "번 명언이 삭제되었습니다.");
+
+    }
+
+    private WiseSaying findById(int paramId) {
+        for (WiseSaying wi : wises) {
+            if (paramId == wi.id) {
+                return wi;
+            }
+        }
+        return null;
+    }
+
+    public void modify(rq rq) {
+        int Id = rq.getIntParam("id", 0);
+
+        if (Id == 0) {
+            System.out.println("번호를 입력해주세요");
+            return;
+        }
+
+        WiseSaying wise__ = null;
+
+        wise__ = findById(Id);
+
+        if (wise__ == null) {
+            System.out.println(Id + "번 글은 존재하지 않습니다.");
+            return;
+        }
+
+        System.out.println("기존 명언) " + wise__.content);
+        System.out.println("기존 작가) " + wise__.author);
+        wise__.content = sc.nextLine();
+        wise__.author = sc.nextLine();
+
+        System.out.println("성공적으로 변경되었습니다.");
     }
 }

@@ -7,13 +7,12 @@ import java.util.Scanner;
 public class WiseSayingController {
 
     private  Scanner sc;
-    List<WiseSaying> wises;
-    int num;
+    private WiseSayingRepository wiseSayingRepository;
 
     WiseSayingController(Scanner sc){
         this.sc = sc;
-        wises = new ArrayList<>();
-        num = 1;
+        this.wiseSayingRepository = new WiseSayingRepository();
+
     }
 
     public void add(rq rq) {
@@ -21,16 +20,16 @@ public class WiseSayingController {
         String content = sc.nextLine().trim();
         System.out.println("작가) ");
         String author = sc.nextLine().trim();
-        System.out.println(num + "번 명언이 성공적으로 등록되었습니다.");
-        WiseSaying w = new WiseSaying(num, content, author);
-        wises.add(w);
-        num++;
+        System.out.println(wiseSayingRepository.num + "번 명언이 성공적으로 등록되었습니다.");
+        WiseSaying w = new WiseSaying(wiseSayingRepository.num, content, author);
+        wiseSayingRepository.wises.add(w);
+        wiseSayingRepository.num++;
     }
 
     public void list(rq rq) {
         System.out.println("======== 명언 목록 ========");
-        for (int i = wises.size() - 1; i >= 0; i--) {
-            System.out.println(wises.get(i));
+        for (int i = wiseSayingRepository.wises.size() - 1; i >= 0; i--) {
+            System.out.println(wiseSayingRepository.wises.get(i));
         }
     }
 
@@ -45,13 +44,13 @@ public class WiseSayingController {
 
         WiseSaying wise_ = null;
 
-        wise_ = findById(paramId);
+        wise_ = wiseSayingRepository.findById(paramId);
 
         if (wise_ == null) {
             System.out.println(paramId + "번 글은 존재하지 않습니다.");
             return;
         }
-        wises.remove(wise_);
+        wiseSayingRepository.wises.remove(wise_);
 
         System.out.println(paramId + "번 명언이 삭제되었습니다.");
     }
@@ -66,7 +65,7 @@ public class WiseSayingController {
 
         WiseSaying wise__ = null;
 
-        wise__ = findById(Id);
+        wise__ = wiseSayingRepository.findById(Id);
 
         if (wise__ == null) {
             System.out.println(Id + "번 글은 존재하지 않습니다.");
@@ -81,12 +80,4 @@ public class WiseSayingController {
         System.out.println("성공적으로 변경되었습니다.");
     }
 
-    private WiseSaying findById(int paramId) {
-        for (WiseSaying wi : wises) {
-            if (paramId == wi.id) {
-                return wi;
-            }
-        }
-        return null;
-    }
 }

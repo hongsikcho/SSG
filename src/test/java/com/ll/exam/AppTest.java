@@ -11,6 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AppTest {
 
     @Test
+    void 파일에_내용쓰기() {
+        Util.mkdir("test_data");
+        Util.saveToFile("test_data/1.json", "내용");
+    }
+
+    @Test
     public void 테스트(){
         assertTrue(1 == 1);
         assertEquals(1,1);
@@ -36,13 +42,4 @@ public class AppTest {
 
     }
 
-    @Test
-    public void 문자열을_파일에_저장() {
-        Util.file.mkdir("test_data");
-        Util.file.saveToFile("test_data/1.txt", "안녕하세여");
-
-        String body = Util.file.readFromFile("test_data/1.txt");
-
-        assertEquals("안녕하세여", body);
-    }
 }

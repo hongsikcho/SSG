@@ -1,5 +1,6 @@
 package com.ll.exam;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -8,9 +9,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileDbTest {
 
+    @BeforeEach
+    void before(){
+        Util.deleteDir("test_data");
+    }
+
     @Test
     void 맵을_객체로_변경() {
-        Util.deleteDir("test_data");
         Util.mkdir("test_data");
         WiseSaying wiseSaying = new WiseSaying(1, "내 사전에 불가능은 없다.", "나폴레옹");
         Util.saveToFile("test_data/1.json", wiseSaying.toJson());
@@ -27,7 +32,6 @@ public class FileDbTest {
     }
     @Test
     void 파일에_있는_JSON을_맵으로_변환() {
-        Util.deleteDir("test_data");
         Util.mkdir("test_data");
         WiseSaying wiseSaying = new WiseSaying(1, "내 사전에 불가능은 없다.", "나폴레옹");
         Util.saveToFile("test_data/1.json", wiseSaying.toJson());
@@ -42,7 +46,6 @@ public class FileDbTest {
 
     @Test
     void 파일에_내용쓰기() {
-        Util.deleteDir("test_data");
         Util.mkdir("test_data");
         WiseSaying wiseSaying = new WiseSaying(1,"나의 죽음을 적에게 알리지 마라", "이순신");
         Util.saveToFile("test_data/1.json", wiseSaying.toJson());

@@ -15,6 +15,16 @@ public class FileDbTest {
     }
 
     @Test
+    void 파일에_숫자를_저장() {
+        Util.mkdir("test_data");
+        Util.numberSaveToFile("test_data/last_id.txt", 1);
+
+        int rs = Util.numberReadFromFile("test_data/last_id.txt",0);
+
+        assertEquals(1, rs);
+
+    }
+    @Test
     void 맵을_객체로_변경() {
         Util.mkdir("test_data");
         WiseSaying wiseSaying = new WiseSaying(1, "내 사전에 불가능은 없다.", "나폴레옹");

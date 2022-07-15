@@ -42,8 +42,7 @@ public class Util {
             }
 
             return body.trim();
-        }
-        catch ( IOException e ) {
+        } catch (IOException e) {
         }
 
         return "";
@@ -83,6 +82,20 @@ public class Util {
         } catch (IOException e) {
 
         }
+    }
+
+    public static void numberSaveToFile(String path, int i) {
+        saveToFile(path , i + "");
+    }
+
+    public static int numberReadFromFile(String path,int defaultvalue) {
+        String rs = readFromFile(path);
+
+        if(rs == null || rs.isEmpty()){
+            return defaultvalue;
+        }
+
+        return Integer.parseInt(rs);
     }
 }
 

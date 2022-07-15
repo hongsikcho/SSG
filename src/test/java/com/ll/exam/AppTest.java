@@ -13,10 +13,11 @@ public class AppTest {
     @Test
     void 파일에_내용쓰기() {
         Util.mkdir("test_data");
-        Util.saveToFile("test_data/1.json", "내용\n내용");
+        WiseSaying wiseSaying = new WiseSaying(1,"나의 죽음을 적에게 알리지 마라", "이순신");
+        Util.saveToFile("test_data/1.json", wiseSaying.toJson());
         String rs = Util.readFromFile("test_data/1.json");
 
-        assertEquals("내용\n내용", rs);
+        assertEquals(wiseSaying.toJson(), rs);
     }
 
     @Test
